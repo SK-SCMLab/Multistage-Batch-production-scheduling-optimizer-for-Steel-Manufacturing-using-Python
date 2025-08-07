@@ -86,4 +86,17 @@ This MILP optimizer helps planners:
 
 ---
 
-## 🪶 
+## 🪶 Technologies used
+- Python 3.13
+- PuLP - Python Linear Programming API
+- ChatGPT
+- Perplexity Pro
+
+---
+
+## 🦓 Requirements
+- Knowledge on Manufacturing puzzles
+- Basic idea on prompt engineering to get code scripts in AI interface
+
+---
+*"When I wrote this code, only God and I understood what I did" - Shuaib Abdurahman*
