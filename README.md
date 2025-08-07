@@ -24,6 +24,16 @@ Each product must be scheduled and processed under various constraints like:
 
 ---
 
+## 🪸 Business Context
+Steel manufacturing often involves batch operations across multiple stages with shared equipment and cleaning constraints. Improper sequencing leads to excessive downtime, batch waste, and late deliveries.
+
+This MILP optimizer helps planners:
+- Plan batches per division respecting minimum campaign sizes before cleaning is mandatory
+- Sequence production runs to minimize costly changeovers
+- Schedule production to meet customer demand and improve OTIF metrics
+
+---
+
 ## 🐞 Features
 - Multi-stage production: **CRD -> HRD -> SPD**
 - Max batch size = **15 units**
@@ -46,17 +56,28 @@ Each product must be scheduled and processed under various constraints like:
 ---
 
 ## 🐍 Mathematical model
-**Decision Variables**
+### Decision Variables
 - x[p][s][t] ∈ {0,1}: Whether product p is scheduled at stage s at time t
 - z[p][s][t] ∈ {0,15}: Actual batch size of product p at stage s, time t (0 if not active)
+- start_time[b] - start time for batch 'b'
+- batch_size[b] - batch size of batch 'b'
+- assign[p, b] - binary variable to assign product p to batch b
+- sequence[i, j]- binary variable to order batches (to model sequencing, '1' if 'b1' before 'b2')
+- makespan - total time to finish all campaigns
 
----
+### Parameters
+- Demand per product 'D_p'
+- Minimum and maximum campaign lengths per product 'min_campaign_p', 'max_campaign_p'
+- Processing time per batch 'proc_time_p'
+- Cleaning time for changeover from product 'i' to 'j' in a stage 'clean_time_stage[i][j]'
+- Storage capacity limits between stages 'storage_max_stage'
+- Batch size limits per product
+- Time horizon 'H'
 
-## 🫎 Objective
+### Objective
 -        minimize Σ(processing_time[p][s] * x[p][s][t]
 
----
-## 🪼 Constraints
+### Constraints
 - Campaign run length between min_campaign[p] and max_campaign[p]
 - Changeover time enforcement between product switches
 - Storage buffer limits between stages
@@ -65,3 +86,4 @@ Each product must be scheduled and processed under various constraints like:
 
 ---
 
+## 🪶 
